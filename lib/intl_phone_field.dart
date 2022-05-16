@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl_phone_field/country_picker_dialog.dart';
-
+import 'dart:io';
 import './countries.dart';
 import './phone_number.dart';
 
@@ -408,8 +408,8 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
       },
       validator: (value) {
         if (!widget.disableLengthCheck && value != null) {
-          return value.length >= _selectedCountry.minLength &&
-                  value.length <= _selectedCountry.maxLength
+          return (Platform.isIOS && value.isEmpty ) || (value.length >= _selectedCountry.minLength &&
+                  value.length <= _selectedCountry.maxLength)
               ? null
               : widget.invalidNumberMessage;
         }
